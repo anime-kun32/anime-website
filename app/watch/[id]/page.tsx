@@ -161,7 +161,7 @@ export default async function WatchEpisode({
     videoUrlSrc = episodeDataFetched.sources.find(
       (item) => item.quality == "default"
     ).url;
-    if (!videoUrlSrc) videoUrlSrc = episodeDataFetched.sources[0].url;
+    if (!videoUrlSrc) videoUrlSrc = `https://gogoanime-and-hianime-proxy-nn.vercel.app/m3u8-proxy?url=${encodeURIComponent(episodeDataFetched.sources[0].url)}`;
 
     // Episodes for this media
     episodesList = (await optimizedFetchOnGoGoAnime({
