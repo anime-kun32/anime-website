@@ -161,7 +161,7 @@ export default async function WatchEpisode({
     videoUrlSrc = episodeDataFetched.sources.find(
       (item) => item.quality == "default"
     ).url;
-    if (!videoUrlSrc) videoUrlSrc = `https://gogoanime-and-hianime-proxy-nn.vercel.app/m3u8-proxy?url=${encodeURIComponent(episodeDataFetched.sources[0].url)}`;
+    if (!videoUrlSrc) videoUrlSrc = episodeDataFetched.sources[0].url;
 
     // Episodes for this media
     episodesList = (await optimizedFetchOnGoGoAnime({
@@ -185,15 +185,21 @@ export default async function WatchEpisode({
     }
 
     // fetch episode data
-    episodeDataFetched = (await aniwatch.getEpisodeLink({
-      episodeId: searchParams.q,
-      category: searchParams.dub == "true" ? "dub" : "sub",
-    })) as EpisodeLinksAnimeWatch;
-
+ episodeDataFetched = (await aniwatch.getEpisodeLink({
+    episodeId: searchParams.q,
+    category: searchParams.dub == "true" ? "dub" : "sub",
+    server: "hd-2",  
+  })) as EpisodeLinksAnimeWatch;
+    
     if (!episodeDataFetched) hadFetchError = true;
+    
+     const proxyUrl = `https://gogoanime-and-hianime-proxy-nn.vercel.app/m3u8-proxy?url=${encodeURIComponent(episodeDataFetched.sources[0].url)}`;
 
-    // fetch episode link source
-    videoUrlSrc = episodeDataFetched.sources[0].url;
+  // Set the video source to the proxy URL
+  videoUrlSrc = proxyUrl;
+
+
+   
 
     // fetch episodes for this media
     if (episodesList.length == 0) {
