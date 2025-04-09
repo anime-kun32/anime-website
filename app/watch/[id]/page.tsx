@@ -193,7 +193,7 @@ export default async function WatchEpisode({
     
     if (!episodeDataFetched) hadFetchError = true;
     
-     const proxyUrl = `https://gogoanime-and-hianime-proxy-nn.vercel.app/m3u8-proxy?url=${encodeURIComponent(episodeDataFetched.sources[0].url)}`;
+     const proxyUrl = `https://gogoanime-and-hianime-proxy-ten.vercel.app/m3u8-proxy?url=${encodeURIComponent(episodeDataFetched.sources[0].url)}`;
 
   // Set the video source to the proxy URL
   videoUrlSrc = proxyUrl;
